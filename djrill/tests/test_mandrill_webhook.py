@@ -57,7 +57,7 @@ class DjrillWebhookSignatureMixinTests(TestCase):
     @override_settings(DJRILL_WEBHOOK_URL="/webhook/?secret=abc123")
     def test_signature(self):
         signature = hmac.new(key=b(settings.DJRILL_WEBHOOK_SIGNATURE_KEY),
-                             msg=b(settings.DJRILL_WEBHOOK_URL+"mandrill_events[]"),
+                             msg=b(f"{settings.DJRILL_WEBHOOK_URL}mandrill_events[]"),
                              digestmod=hashlib.sha1)
         hash_string = b64encode(signature.digest())
         response = self.client.post('/webhook/?secret=abc123', data={"mandrill_events":"[]"},

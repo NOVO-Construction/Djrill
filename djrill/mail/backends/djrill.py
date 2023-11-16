@@ -477,6 +477,6 @@ class DjrillBackend(BaseEmailBackend):
                 dt = (dt - dt.utcoffset()).replace(tzinfo=None)
             return dt.isoformat(' ')
         elif isinstance(dt, date):
-            return dt.isoformat() + ' 00:00:00'
+            return f"{dt.isoformat()} 00:00:00"
         else:
             return dt
