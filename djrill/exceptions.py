@@ -40,11 +40,11 @@ class DjrillError(Exception):
         description = "Sending a message"
         try:
             to_emails = [to['email'] for to in self.payload['message']['to']]
-            description += " to %s" % ','.join(to_emails)
+            description += f" to {','.join(to_emails)}"
         except KeyError:
             pass
         try:
-            description += " from %s" % self.payload['message']['from_email']
+            description += f" from {self.payload['message']['from_email']}"
         except KeyError:
             pass
         return description
@@ -113,5 +113,5 @@ class NotSerializableForMandrillError(DjrillError, TypeError):
             message = "Don't know how to send this data to Mandrill. " \
                       "Try converting it to a string or number first."
         if orig_err is not None:
-            message += "\n%s" % str(orig_err)
+            message += f"\n{str(orig_err)}"
         super(NotSerializableForMandrillError, self).__init__(message, *args, **kwargs)

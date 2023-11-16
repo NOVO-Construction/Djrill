@@ -52,8 +52,7 @@ class DjrillBackendMockAPITestCase(TestCase):
             raise AssertionError("requests.post was called without an url (?!)")
         if not post_url.endswith(endpoint):
             raise AssertionError(
-                "requests.post was not called on %s\n(It was called on %s)"
-                % (endpoint, post_url))
+                f"requests.post was not called on {endpoint}\n(It was called on {post_url})")
 
     def get_api_call_data(self):
         """Returns the data posted to the Mandrill API.

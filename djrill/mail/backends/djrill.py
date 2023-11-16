@@ -68,8 +68,7 @@ class DjrillBackend(BaseEmailBackend):
             if not self.fail_silently:
                 raise
         else:
-            self.session.headers["User-Agent"] = "Djrill/%s %s" % (
-                __version__, self.session.headers.get("User-Agent", ""))
+            self.session.headers["User-Agent"] = f"Djrill/{__version__} {self.session.headers.get('User-Agent', '')}"
             return True
 
     def close(self):
@@ -389,9 +388,7 @@ class DjrillBackend(BaseEmailBackend):
         (content, mimetype) = message.alternatives[0]
         if mimetype != 'text/html':
             raise NotSupportedByMandrillError(
-                "Invalid alternative mimetype '%s'. "
-                "Mandrill only accepts plain text and html emails."
-                % mimetype,
+                f"Invalid alternative mimetype '{mimetype}'. Mandrill only accepts plain text and html emails.",
                 email_message=message)
 
         msg_dict['html'] = content

@@ -57,7 +57,7 @@ class DjrillWebhookSignatureMixin(object):
             post_lists = sorted(request.POST.lists())
             for value_list in post_lists:
                 for item in value_list[1]:
-                    post_string += "%s%s" % (value_list[0], item)
+                    post_string += f"{value_list[0]}{item}"
 
             hash_string = b64encode(hmac.new(key=b(signature_key), msg=b(post_string), digestmod=hashlib.sha1).digest())
             if signature != hash_string:
@@ -92,7 +92,7 @@ class DjrillWebhookView(DjrillWebhookSecretMixin, DjrillWebhookSignatureMixin, V
             try:
                 # Sync event: https://mandrill.zendesk.com/hc/en-us/articles/205583297
                 # Synthesize an event_type like "whitelist_add" or "blacklist_change"
-                event_type = "%s_%s" % (event['type'], event['action'])
+                event_type = f"{event['type']}_{event['action']}"
             except KeyError:
                 # Unknown future event format
                 event_type = None
